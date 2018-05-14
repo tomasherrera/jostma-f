@@ -1,0 +1,105 @@
+/* You can add global styles to this file, and also import other style files */
+.app-container{
+  margin-right: 10%;
+  margin-left: 10%;
+}
+.navbar-jostma a{
+  color: white !important;
+}
+.navigation{
+  margin-top: 15px;
+}
+.sales-toolbar{
+  margin-top: 15px;
+}
+.pointer{
+  cursor: pointer;
+}
+button{
+  cursor: pointer !important;
+}
+.btn-fill-cell{
+  width: 100%;
+  height: 100%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 0px;
+}
+.fill-cell{
+  padding: 0px !important;
+}
+.table-sale{
+  margin-top: 20px;
+}
+input:focus{
+    outline: none;
+}
+*:focus {
+  outline: none;
+}
+.qty-cell{
+  width: 80px;
+}
+.unit-cell{
+  width: 100px !important;
+}
+.square-input{
+  border-radius: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.no-border-input{
+  border: 0px;
+  background: transparent !important;
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #FF9800;
+  color: white;
+}
+tr:hover td input{
+  color: white !important;
+  
+}
+input.no-spin::-webkit-outer-spin-button,
+input.no-spin::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #FF9800; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-box{
+  text-align: center;
+}
+
+.empty-shopping-cart{
+  border: 2px dotted;
+  border-color: #A0A0A0FF;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+.empty-shopping-cart p{
+  color: #A0A0A0FF;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.isolated-div{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

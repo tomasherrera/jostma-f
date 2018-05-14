@@ -1,0 +1,99 @@
+<div class="modal-header">
+  <h4 class="modal-title">Nueva Venta -- Por: Magalis Peñata</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click'); salesService.cleanupModal();">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Buscar Producto" autofocus=true [(ngModel)]="itemsService.search" (ngModelChange)="itemsService.searchItems()">
+
+    <div class="loader-box">
+      <div class="loader" [hidden]="itemsService.itemsLoaded"></div>
+    </div>
+    
+    <table class="table table-bordered table-hover table-sm table-sale" [hidden]="!itemsService.itemsLoaded || itemsService.items.length === 0" >
+      <thead>
+        <tr>
+          <th scope="col"># Cód.</th>
+          <th scope="col">Producto</th>
+          <th class="unit-cell">Precio</th>
+          <th class="qty-cell">Existencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of itemsService.items">
+          <th scope="row">{{item.id}}</th>
+          <td>{{item.description}}</td>
+          <td>{{item.base_price}}</td>
+          <td>{{item.stock}}</td>
+          <td class="fill-cell"><button class="btn btn-primary btn-fill-cell" (click)="salesService.addSaleItem(item)">Agregar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="empty-shopping-cart" [hidden]="salesService.sale_items.length > 0">
+      <p>El carrito de compras está vacio.</p>
+    </div>
+    <table class="table table-bordered table-hover table-sm table-sale" [hidden]="salesService.sale_items.length === 0">
+      <thead>
+        <tr>
+          <th scope="col"># Cód.</th>
+          <th scope="col">Producto</th>
+          <th class="unit-cell">Costo Unit</th>
+          <th class="qty-cell">Cant.</th>
+          <th scope="col">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sale_item of salesService.sale_items">
+          <th scope="row">{{sale_item.item_id}}</th>
+          <td>{{sale_item.item_description}}</td>
+          <td class="fill-cell"><input type="number" class="form-control square-input no-border-input no-spin" value="1" min=0 step="50" required pattern="[0-9]*" #ctrl="ngModel" [(ngModel)]="sale_item.unit_price" (ngModelChange)="salesService.calculateSubtotal(sale_item); salesService.saveSaleItem(sale_item)"></td>
+          <td class="fill-cell"><input type="number" class="form-control square-input no-border-input" value="1" size="2" min=1 [(ngModel)]="sale_item.quantity" (ngModelChange)="salesService.calculateSubtotal(sale_item); salesService.saveSaleItem(sale_item)"></td>
+          <td class="fill-cell"><input type="number" class="form-control square-input no-border-input no-spin" value="1" size="2" min=1 step="50" [(ngModel)]="sale_item.subtotal" (ngModelChange)="salesService.calculateUnitPrice(sale_item); salesService.saveSaleItem(sale_item)"></td>
+          <td class="fill-cell"><button class="btn btn-danger btn-fill-cell">Borrar</button></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>Total:</th>
+          <td>{{salesService.sumTotal()}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-1 col-form-label">Cliente:</label>
+    <div class="col-sm-11">
+      <input type="text" class="form-control" id="clientsSearch" placeholder="Ingresar Cedula del Cliente, nombre o apellido" autofocus=true [(ngModel)]="clientsService.search" (ngModelChange)="clientsService.searchClients()">
+    </div>
+    
+  </div>
+  <div class="loader-box">
+    <div class="loader" [hidden]="clientsService.clientsLoaded"></div>
+  </div>
+
+  <table class="table table-bordered table-hover table-sm table-sale" [hidden]="clientsService.clients.length === 0">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Cedula</th>
+        <th class="">Compras</th>
+        <th class="">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clientsService.clients">
+        <td>{{client.last_name}} {{client.first_name}}</td>
+        <td>{{client.identification}}</td>
+        <td><a href="">Ver</a></td>
+        <td class="fill-cell"><button class="btn btn-outline-warning btn-fill-cell">Cambiar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Cancelar</button>
+  <button type="button" class="btn btn-success" (click)="salesService.saveSale(); activeModal.close('Close click')">Completar Venta</button>
+</div>

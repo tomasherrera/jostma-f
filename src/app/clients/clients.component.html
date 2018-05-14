@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="btn-toolbar justify-content-between sales-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group" role="group" aria-label="First group">
+        <button class="btn btn-outline-success">Ingresar Cliente</button>
+      </div>
+      <div class="input-group">
+        <button class="btn btn-outline-danger">Cerrar Dia: {{ app.today | date }}</button>
+      </div>
+    </div>
+    <hr>
+  </div>
+</div>
+
+<form #clientForm="ngForm" (ngSubmit)="clientsService.saveClient()">
+  <h4>Ingresar datos del cliente: {{first_name}} {{last_name}} {{identification}}</h4>
+  <div class="form-row">
+    <div class="form-group col-sm-3">
+      <label for="identification">Nº de Cédula</label>
+      <input type="text" class="form-control" placeholder="1100123456" name="identification" [(ngModel)]="clientsService.client.identification" required>
+    </div>
+    <div class="form-group col-sm-3">
+      <label for="first_name">Nombre</label>
+      <input type="text" class="form-control" placeholder="Diomedes" required name="first_name" [(ngModel)]="clientsService.client.first_name">
+    </div>
+    <div class="form-group col-sm-3">
+      <label for="last_name">Apellido</label>
+      <input type="text" class="form-control" placeholder="Diaz" required name="last_name" [(ngModel)]="clientsService.client.last_name">
+    </div>
+    <div class="form-group col-sm-3">
+      <label for="phone">Teléfono</label>
+      <input type="text" class="form-control" placeholder="3012157896" name="phone" [(ngModel)]="clientsService.client.phone">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-3">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" name="credit" [(ngModel)]="clientsService.client.credit"> Crédito Permitido
+        </label>
+      </div>
+    </div>
+    <div class="form-group col-md-3" [hidden]="!clientsService.client.credit">
+      <label for="credit-limit">Limite de crédito <small><i>(Dejar en 0 para ilimitado)</i></small></label>
+      <input type="text" class="form-control" name="credit-limit" placeholder="0" [(ngModel)]="clientsService.client.credit_limit">
+    </div>
+    <div class="form-group col-md-3">
+      <button class="btn btn-outline-success" type="submit" [disabled]="!clientForm.valid">Guardar Cliente</button>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <table class="table table-hover table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Identificación</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Crédito</th>
+        <th scope="col">Crédito Restante</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="pointer" (click)="selectClient()" *ngFor="let client of clientsService.clients">
+        <th scope="row">{{client.identification}}</th>
+        <td>{{client.first_name}}</td>
+        <td>{{client.last_name}}</td>
+        <td>{{client.phone}}</td>
+        <td>{{client.credit}}</td>
+        <td>{{client.credit_limit}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
